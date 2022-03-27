@@ -1,11 +1,14 @@
 import csv
 import os, shutil
+from cleanup import cleanup
 from PIL import Image, ImageFont, ImageDraw
 from enum import IntEnum
 
 SIZE = (1280, 720)
 
-#TODO: Would a dictionary be more appropriate?
+cleanup()
+
+# TODO: Would a dictionary be more appropriate?
 class Index(IntEnum):
     TOURNEY_NAME = 0
     RND_NAME = 1
@@ -39,7 +42,7 @@ with open('vods.csv', newline='') as csvfile:
         
         draw = ImageDraw.Draw(im)
 
-        #TODO: Background images and additional assets
+        # TODO: Background images and additional assets
         
         # Player names drawn at 1/4 width and 3/4 width, at the top
         draw.text((SIZE[0]//4, SIZE[1]//16), line[Index.P1_NAME.value], anchor="ms", font=font)
@@ -52,12 +55,12 @@ with open('vods.csv', newline='') as csvfile:
         draw.text((SIZE[0]//4, SIZE[1] - SIZE[1]//16), line[Index.TOURNEY_NAME.value], anchor="mt", font=font)
         draw.text((SIZE[0] - SIZE[0]//4, SIZE[1] - SIZE[1]//16), line[Index.RND_NAME.value], anchor="mt", font=font)
 
-        #TODO: Second character. Could either do two smaller portraits, or have them overlap?
+        # TODO: Second character. Could either do two smaller portraits, or have them overlap?
         
         # Paste character portraits at 1/4 and 3/4 width respectively
         # TODO: Need to fine tune the height as well as maybe crop out any empty space in the images
-        im.paste(p1_char, (SIZE[0]//4 - p1_char.width//2, SIZE[1]//6), p1_char)
-        im.paste(p2_char, (SIZE[0] - SIZE[0]//4 - p2_char.width//2, SIZE[1]//6), p2_char)
+        im.paste(p1_char, (SIZE[0]//4 - p1_char.width//2, SIZE[1]//2 - p1_char.height//2), p1_char)
+        im.paste(p2_char, (SIZE[0] - SIZE[0]//4 - p2_char.width//2, SIZE[1]//2 - p2_char.height//2), p2_char)
 
         filename = line[Index.TOURNEY_NAME.value] + ' - SSBU - ' + line[Index.P1_NAME.value] + ' (' + line[Index.P1_CHAR_1.value] + ') vs. ' + line[Index.P2_NAME.value] + ' (' + line[Index.P2_CHAR_1.value] + ')'
         
