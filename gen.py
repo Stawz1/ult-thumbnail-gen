@@ -35,10 +35,14 @@ with open('vods.csv', newline='') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
     next(reader, None)
     for line in reader:
-        p1_char = Image.open('Fighter Portraits/' + line[Index.P1_CHAR_1.value] + '/portrait.png')
-        p2_char = Image.open('Fighter Portraits/' + line[Index.P2_CHAR_1.value] + '/portrait.png')
+        p1_char = Image.open('Fighter Portraits/' + line[Index.P1_CHAR_1.value] + '/cropped.png')
+        p2_char = Image.open('Fighter Portraits/' + line[Index.P2_CHAR_1.value] + '/cropped.png')
+
+        bg = Image.open('bg.png')
         
         im = Image.new(mode="RGB", size=SIZE)
+
+        im.paste(bg)
         
         draw = ImageDraw.Draw(im)
 
